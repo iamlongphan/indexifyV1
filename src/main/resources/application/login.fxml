@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="530.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.LoginController">
+    <right>
+        <AnchorPane prefHeight="400.0" prefWidth="332.0" style="-fx-background-color: #FFFFFF;" BorderPane.alignment="CENTER">
+            <children>
+                <ImageView fx:id="lockImageView" fitHeight="75.0" fitWidth="132.0" layoutX="137.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@padlock.jpg" />
+                    </image>
+                </ImageView>
+                <Label layoutX="35.0" layoutY="155.0" prefHeight="21.0" prefWidth="85.0" text="Username">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="usernameTextField" layoutX="141.0" layoutY="153.0" prefHeight="25.0" prefWidth="169.0" promptText="Username" />
+                <Label layoutX="35.0" layoutY="190.0" prefHeight="21.0" prefWidth="85.0" text="Password">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Label>
+                <PasswordField fx:id="enterPasswordField" layoutX="141.0" layoutY="188.0" prefHeight="25.0" prefWidth="170.0" promptText="Password" />
+                <Button fx:id="loginButton" layoutX="34.0" layoutY="270.0" mnemonicParsing="false" onAction="#loginButtonAction" prefHeight="25.0" prefWidth="280.0" style="-fx-background-color: #E96151;" text="Login" textFill="WHITE">
+                    <font>
+                        <Font size="13.0" />
+                    </font>
+                </Button>
+                <Button fx:id="cancelButton" layoutX="35.0" layoutY="306.0" mnemonicParsing="false" onAction="#cancelButtonAction" prefHeight="25.0" prefWidth="280.0" style="-fx-background-color: #E96151;" text="Cancel" textFill="WHITE">
+                    <font>
+                        <Font size="13.0" />
+                    </font>
+                </Button>
+                <Label fx:id="loginMessageLabel" alignment="CENTER" layoutX="36.0" layoutY="230.0" prefHeight="21.0" prefWidth="277.0" textFill="RED">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Label>
+            <Button fx:id="resetPassword" layoutX="120.0" layoutY="355.0" mnemonicParsing="false" onAction="#resetPassword" prefHeight="25.0" prefWidth="111.0" style="-fx-background-color: #a6051a;" text="Reset Password" textFill="WHITE" />
+            </children>
+        </AnchorPane>
+    </right>
+    <center>
+        <AnchorPane prefHeight="407.0" prefWidth="228.0" BorderPane.alignment="CENTER">
+            <children>
+                <ImageView fx:id="brandingImageView" fitHeight="410.0" fitWidth="228.0" layoutX="8.0" layoutY="-1.0" pickOnBounds="true" smooth="false">
+                    <image>
+                        <Image url="@gradientPictogram.jpg" />
+                    </image>
+                </ImageView>
+                <Text fill="WHITE" layoutX="50.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Indexify" textAlignment="CENTER">
+                    <font>
+                        <Font size="42.0" />
+                    </font>
+                </Text>
+            </children>
+        </AnchorPane>
+    </center>
+</BorderPane>
