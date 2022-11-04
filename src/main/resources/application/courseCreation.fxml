@@ -10,6 +10,6 @@
    <children>
       <TextField fx:id="courseName" layoutX="128.0" layoutY="130.0" />
       <Label layoutX="35.0" layoutY="134.0" prefHeight="17.0" prefWidth="93.0" text="Name of Course:" />
-      <Button layoutX="128.0" layoutY="246.0" mnemonicParsing="false" text="Create"/>
+      <Button layoutX="128.0" layoutY="246.0" mnemonicParsing="false" text="Create" />
    </children>
 </AnchorPane>

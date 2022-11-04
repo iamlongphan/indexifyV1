@@ -8,28 +8,28 @@ import javafx.stage.*;
 import javafx.event.*;
 import java.io.*;
 public class CourseController {
-    private TextField courseName;
+    @FXML
+    Button courseBox;
+    @FXML
+    Label renameLabel;
+    @FXML
+    TextField newName;
     @FXML
     protected void CreateClick(ActionEvent event)
     {
-        Parent root;
-        try
-        {
-            root = FXMLLoader.load(Main.class.getResource("courseCreation.fxml"));
-            Stage stage = new Stage();
-            stage.setTitle("Create Course");
-            stage.setScene(new Scene(root,320, 300));
-            stage.setResizable(false);
-            stage.show();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
+        courseBox.setVisible(true);
     }
     @FXML
-    public void courseCreate(ActionEvent event)
+    protected void DeleteClick(ActionEvent event)
     {
-        courseName.getText();
+        courseBox.setVisible(false);
+    }
+    @FXML
+    protected void RenameClick(ActionEvent event)
+    {
+        renameLabel.setVisible(true);
+        newName.setVisible(true);
+        courseBox.setText(newName.getText());
     }
 }
+
