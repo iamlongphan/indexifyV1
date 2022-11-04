@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.Pane?>
+
+<Group xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.CourseController">
+   <children>
+      <Pane prefHeight="768.0" prefWidth="1024.0">
+         <children>
+            <Button layoutX="159.0" layoutY="14.0" mnemonicParsing="false" text="Rename" />
+            <Button layoutX="101.0" layoutY="14.0" mnemonicParsing="false" text="Delete" />
+            <Button fx:id="CreateCl" layoutX="13.0" layoutY="14.0" mnemonicParsing="false" onAction="#CreateClick" text="Add Course" />
+            <Button layoutX="18.0" layoutY="731.0" mnemonicParsing="false" text="Logout" />
+         </children>
+      </Pane>
+   </children>
+</Group>

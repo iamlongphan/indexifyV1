@@ -55,7 +55,7 @@ public class LoginController implements Initializable {
         if(usernameTextField.getText().isBlank() == false && enterPasswordField.getText().isBlank() ==false){
             validateLogin(); // Change to if Statement if/when we change validateLogin to boolean
             Stage stage = (Stage) loginButton.getScene().getWindow();
-            CreateClick(event);
+            loginSuccess(event);
             stage.close();
         }
         else{
@@ -69,15 +69,16 @@ public class LoginController implements Initializable {
         stage.close();
     }
     @FXML
-    protected void CreateClick(ActionEvent event)
+    protected void loginSuccess(ActionEvent event)
     {
         Parent root;
         try
         {
-            root = FXMLLoader.load(Main.class.getResource("hello-view.fxml"));
+            root = FXMLLoader.load(Main.class.getResource("courseViewer.fxml"));
             Stage stage = new Stage();
             stage.setTitle("Course Viewer");
             stage.setScene(new Scene(root,1024, 768));
+            stage.setResizable(false);
             stage.show();
 
         }
