@@ -92,11 +92,18 @@ public class CourseController {
                 warningLabel.setVisible(false);
             }
         });
+        RenameButton2.setOnAction(new EventHandler<ActionEvent>()
+        {
+            @Override public void handle(ActionEvent e)
+            {
+
+            }
+        });
         buns.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
         if(getNode(grid1Pane, indexRow, indexCol) == null)
         {
-            buns.setButtonData(courseBox2, ButtonBar.ButtonData.LEFT);
-            buns.setButtonData(RenameButton2, ButtonBar.ButtonData.LEFT);
+            ButtonBar.setButtonData(courseBox2, ButtonBar.ButtonData.LEFT);
+            ButtonBar.setButtonData(RenameButton2, ButtonBar.ButtonData.LEFT);
             ButtonBar.setButtonData(DeleteButton2, ButtonBar.ButtonData.LEFT);
             buns.getButtons().addAll(courseBox2, RenameButton2, DeleteButton2);
             grid1Pane.add(buns, indexRow, indexCol);
@@ -118,8 +125,6 @@ public class CourseController {
             {
                 indexCol++;
             }
-
-
             buns.setButtonData(courseBox2, ButtonBar.ButtonData.LEFT);
             buns.setButtonData(RenameButton2, ButtonBar.ButtonData.LEFT);
             buns.setButtonData(DeleteButton2, ButtonBar.ButtonData.LEFT);
