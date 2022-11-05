@@ -1,7 +1,9 @@
 package application;
 
 import javafx.fxml.FXML;
+import javafx.geometry.HPos;
 import javafx.geometry.NodeOrientation;
+import javafx.geometry.VPos;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -14,15 +16,17 @@ public class CourseController {
     @FXML
     Button RenameButton;
     @FXML
+    Label renameLabel;
+    @FXML
     Button courseBox;
     @FXML
     GridPane grid1Pane;
     @FXML
-    Label renameLabel;
-    @FXML
     Label warningLabel;
     @FXML
     TextField newName;
+    @FXML
+    TextField textField1;
     @FXML
     Integer indexRow = 0;
     @FXML
@@ -78,9 +82,11 @@ public class CourseController {
         {
             counter++;
         }
-        Button courseBox2 = new Button("Course " + counter);
+        Button courseBox2 = new Button("New Course");
         Button RenameButton2 = new Button("Rename");
         Button DeleteButton2 = new Button("Delete");
+        TextField newName2 = new TextField("Enter new course name");
+        Button ConfirmButton = new Button("Confirm");
         ButtonBar buns = new ButtonBar();
         DeleteButton2.setOnAction(new EventHandler<ActionEvent>()
         {
@@ -89,6 +95,7 @@ public class CourseController {
                 indexCol = grid1Pane.getRowIndex(buns);
                 indexRow = grid1Pane.getColumnIndex(buns);
                 DeleteClick(buns);
+                DeleteClick(newName2);
                 warningLabel.setVisible(false);
             }
         });
@@ -96,7 +103,17 @@ public class CourseController {
         {
             @Override public void handle(ActionEvent e)
             {
-
+                ConfirmButton.setVisible(true);
+                newName2.setVisible(true);
+            }
+        });
+        ConfirmButton.setOnAction(new EventHandler<ActionEvent>()
+        {
+            @Override public void handle(ActionEvent e)
+            {
+                courseBox2.setText(newName2.getText());
+                newName2.setVisible(false);
+                ConfirmButton.setVisible(false);
             }
         });
         buns.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
@@ -105,11 +122,17 @@ public class CourseController {
             ButtonBar.setButtonData(courseBox2, ButtonBar.ButtonData.LEFT);
             ButtonBar.setButtonData(RenameButton2, ButtonBar.ButtonData.LEFT);
             ButtonBar.setButtonData(DeleteButton2, ButtonBar.ButtonData.LEFT);
-            buns.getButtons().addAll(courseBox2, RenameButton2, DeleteButton2);
+            ButtonBar.setButtonData(ConfirmButton, ButtonBar.ButtonData.LEFT);
+            buns.getButtons().addAll(courseBox2, RenameButton2, DeleteButton2, ConfirmButton);
             grid1Pane.add(buns, indexRow, indexCol);
+            grid1Pane.add(newName2, indexRow, indexCol);
+            grid1Pane.setHalignment(newName2, HPos.CENTER);
+            grid1Pane.setValignment(newName2, VPos.TOP);
+            ConfirmButton.setVisible(false);
+            newName2.setVisible(false);
             warningLabel.setVisible(false);
         }
-        else if(getNodeCount(grid1Pane) >= 7)
+        else if(getNodeCount(grid1Pane) >= 12)
         {
             warningLabel.setVisible(true);
 
@@ -125,28 +148,34 @@ public class CourseController {
             {
                 indexCol++;
             }
-            buns.setButtonData(courseBox2, ButtonBar.ButtonData.LEFT);
-            buns.setButtonData(RenameButton2, ButtonBar.ButtonData.LEFT);
-            buns.setButtonData(DeleteButton2, ButtonBar.ButtonData.LEFT);
-            buns.getButtons().addAll(courseBox2, RenameButton2, DeleteButton2);
+            ButtonBar.setButtonData(courseBox2, ButtonBar.ButtonData.LEFT);
+            ButtonBar.setButtonData(RenameButton2, ButtonBar.ButtonData.LEFT);
+            ButtonBar.setButtonData(DeleteButton2, ButtonBar.ButtonData.LEFT);
+            ButtonBar.setButtonData(ConfirmButton, ButtonBar.ButtonData.LEFT);
+            buns.getButtons().addAll(courseBox2, RenameButton2, DeleteButton2, ConfirmButton);
             grid1Pane.add(buns, indexRow, indexCol);
+            grid1Pane.add(newName2, indexRow, indexCol);
+            grid1Pane.setHalignment(newName2, HPos.CENTER);
+            grid1Pane.setValignment(newName2, VPos.TOP);
+            ConfirmButton.setVisible(false);
+            newName2.setVisible(false);
             warningLabel.setVisible(false);
         }
         else
         {
-            if(indexRow == 1)
-            {
-                indexRow = 0;
-            }
-            else
-            {
-                indexRow++;
-            }
-            buns.setButtonData(courseBox2, ButtonBar.ButtonData.LEFT);
-            buns.setButtonData(RenameButton2, ButtonBar.ButtonData.LEFT);
-            buns.setButtonData(DeleteButton2, ButtonBar.ButtonData.LEFT);
-            buns.getButtons().addAll(courseBox2, RenameButton2, DeleteButton2);
+
+            indexRow++;
+            ButtonBar.setButtonData(courseBox2, ButtonBar.ButtonData.LEFT);
+            ButtonBar.setButtonData(RenameButton2, ButtonBar.ButtonData.LEFT);
+            ButtonBar.setButtonData(DeleteButton2, ButtonBar.ButtonData.LEFT);
+            ButtonBar.setButtonData(ConfirmButton, ButtonBar.ButtonData.LEFT);
+            buns.getButtons().addAll(courseBox2, RenameButton2, DeleteButton2, ConfirmButton);
             grid1Pane.add(buns, indexRow, indexCol);
+            grid1Pane.add(newName2, indexRow, indexCol);
+            grid1Pane.setHalignment(newName2, HPos.CENTER);
+            grid1Pane.setValignment(newName2, VPos.TOP);
+            ConfirmButton.setVisible(false);
+            newName2.setVisible(false);
             warningLabel.setVisible(false);
         }
     }
@@ -154,6 +183,8 @@ public class CourseController {
     @FXML
     /**
      * Delete function's main method
+     * ******DISCLAIMER******
+     * DELETE ONLY ONE COURSE AT A TIME, DELETING MULTIPLE COURSES BREAKS THE PROGRAM AT THIS TIME
      */
     protected void DeleteClick(Node node)
     {
@@ -163,15 +194,12 @@ public class CourseController {
     /**
      * Rename function's main method
      */
-    protected void RenameClick(ActionEvent event)
+    protected void RenameClick()
     {
-        RenameButton.setVisible(false);
-        renameLabel.setVisible(true);
-        newName.setVisible(true);
-        renameConfirmB.setVisible(true);
+        textField1.setVisible(true);
     }
     @FXML
-    protected void renameConfirm(ActionEvent event)
+    protected void renameConfirm()
     {
         renameConfirmB.isDefaultButton();
         renameConfirmB.setVisible(true);
