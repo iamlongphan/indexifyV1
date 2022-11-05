@@ -9,6 +9,5 @@ module indexify {
 //    opens application to javafx.fxml;
     opens application;
     exports application;
-    exports indexifyDB;
     opens indexifyDB;
 }
