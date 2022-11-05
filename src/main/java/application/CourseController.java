@@ -2,27 +2,18 @@ package application;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.NodeOrientation;
-import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.stage.*;
 import javafx.event.*;
-import java.io.*;
 public class CourseController {
-    @FXML
-    Button DeleteButton;
     @FXML
     Button addButton;
     @FXML
     Button renameConfirmB;
     @FXML
     Button RenameButton;
-    @FXML
-    ButtonBar Buttons;
     @FXML
     Button courseBox;
     @FXML
@@ -34,9 +25,9 @@ public class CourseController {
     @FXML
     TextField newName;
     @FXML
-    int indexRow = 0;
+    Integer indexRow = 0;
     @FXML
-    int indexCol = 0;
+    Integer indexCol = 0;
     @FXML
     int counter = 0;
     public Node getNode(GridPane gridPane1, Integer col, Integer row)
@@ -73,6 +64,10 @@ public class CourseController {
         return result;
     }
     @FXML
+    /**
+     * Method for the creation of courses, additionaly creates the buttons that provide deleting,
+     * and renaming.
+     */
     protected void CreateClick(ActionEvent event)
     {
         if(!addButton.isPressed())
@@ -87,8 +82,8 @@ public class CourseController {
         {
             @Override public void handle(ActionEvent e)
             {
-                indexRow = 0;
-                indexCol = 0;
+                indexCol = grid1Pane.getRowIndex(buns);
+                indexRow = grid1Pane.getColumnIndex(buns);
                 DeleteClick(buns);
                 warningLabel.setVisible(false);
             }
@@ -98,19 +93,33 @@ public class CourseController {
         {
             buns.setButtonData(courseBox2, ButtonBar.ButtonData.LEFT);
             buns.setButtonData(RenameButton2, ButtonBar.ButtonData.LEFT);
-            buns.setButtonData(DeleteButton2, ButtonBar.ButtonData.LEFT);
+            ButtonBar.setButtonData(DeleteButton2, ButtonBar.ButtonData.LEFT);
             buns.getButtons().addAll(courseBox2, RenameButton2, DeleteButton2);
             grid1Pane.add(buns, indexRow, indexCol);
             warningLabel.setVisible(false);
+            System.out.println(indexCol);
+            System.out.println(indexRow);
         }
         else if(getNodeCount(grid1Pane) >= 7)
         {
             warningLabel.setVisible(true);
+            System.out.println(indexCol);
+            System.out.println(indexRow);
         }
-        else if(indexRow == 1)
+        else if(getNode(grid1Pane, indexRow, indexCol) != null && counter%2 != 0)
         {
             indexRow = 0;
-            indexCol++;
+            if(indexCol == 2)
+            {
+                indexCol = 0;
+            }
+            else
+            {
+                indexCol++;
+            }
+
+            System.out.println(indexCol);
+            System.out.println(indexRow);
             buns.setButtonData(courseBox2, ButtonBar.ButtonData.LEFT);
             buns.setButtonData(RenameButton2, ButtonBar.ButtonData.LEFT);
             buns.setButtonData(DeleteButton2, ButtonBar.ButtonData.LEFT);
@@ -120,14 +129,22 @@ public class CourseController {
         }
         else
         {
-            indexRow++;
+            System.out.println(indexCol);
+            System.out.println(indexRow);
+            if(indexRow == 1)
+            {
+                indexRow = 0;
+            }
+            else
+            {
+                indexRow++;
+            }
             buns.setButtonData(courseBox2, ButtonBar.ButtonData.LEFT);
             buns.setButtonData(RenameButton2, ButtonBar.ButtonData.LEFT);
             buns.setButtonData(DeleteButton2, ButtonBar.ButtonData.LEFT);
             buns.getButtons().addAll(courseBox2, RenameButton2, DeleteButton2);
             grid1Pane.add(buns, indexRow, indexCol);
             warningLabel.setVisible(false);
-
         }
     }
 
