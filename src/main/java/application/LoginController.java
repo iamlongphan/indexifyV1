@@ -89,11 +89,9 @@ public class LoginController implements Initializable {
     }
     //Change to Boolean for Database i think
     public void validateLogin(){
-        System.out.println("Username: "+usernameTextField.getText());
+        System.out.println("Username: " + usernameTextField.getText());
         System.out.println("Password: " + enterPasswordField.getText());
-
     }
-
     public void resetPassword(){
         System.out.println("Reset Password");
 

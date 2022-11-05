@@ -11,10 +11,10 @@
    <children>
       <Pane prefHeight="768.0" prefWidth="1024.0">
          <children>
-            <Button layoutX="159.0" layoutY="14.0" mnemonicParsing="false" onAction="#RenameClick" text="Rename" />
-            <Button layoutX="101.0" layoutY="14.0" mnemonicParsing="false" onAction="#DeleteClick" text="Delete" />
-            <Button layoutX="13.0" layoutY="14.0" mnemonicParsing="false" onAction="#CreateClick" text="Add Course" />
-            <Button layoutX="18.0" layoutY="731.0" mnemonicParsing="false" text="Logout" />
+            <Button fx:id="RenameButton" layoutX="159.0" layoutY="14.0" mnemonicParsing="false" onAction="#RenameClick" text="Rename" />
+            <Button fx:id="deleteButton" layoutX="101.0" layoutY="14.0" mnemonicParsing="false" onAction="#DeleteClick" text="Delete" />
+            <Button fx:id="addButton" layoutX="13.0" layoutY="14.0" mnemonicParsing="false" onAction="#CreateClick" text="Add Course" />
+            <Button fx:id="logoutButton" layoutX="18.0" layoutY="731.0" mnemonicParsing="false" text="Logout" />
             <Button fx:id="courseBox" layoutX="39.0" layoutY="74.0" mnemonicParsing="false" prefHeight="291.0" prefWidth="358.0" style="-fx-background-color: BLUE;" text="Course 1" textFill="WHITE" visible="false">
                <font>
                   <Font size="45.0" />
@@ -22,6 +22,7 @@
             </Button>
             <TextField fx:id="newName" layoutX="512.0" layoutY="14.0" visible="false" />
             <Label fx:id="renameLabel" layoutX="446.0" layoutY="18.0" prefHeight="17.0" prefWidth="66.0" text="New name:" visible="false" />
+            <Button fx:id="renameConfirmB" defaultButton="true" layoutX="671.0" layoutY="14.0" mnemonicParsing="false" onAction="#renameConfirm" text="Confirm" visible="false" />
          </children>
       </Pane>
    </children>

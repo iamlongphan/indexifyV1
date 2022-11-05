@@ -9,15 +9,22 @@ import javafx.event.*;
 import java.io.*;
 public class CourseController {
     @FXML
+    Button renameConfirmB;
+    @FXML
+    Button RenameButton;
+    @FXML
     Button courseBox;
     @FXML
     Label renameLabel;
     @FXML
     TextField newName;
     @FXML
+    TextField setcourseName;
+    @FXML
     protected void CreateClick(ActionEvent event)
     {
-        courseBox.setVisible(true);
+        Button courseBox2 = new Button("HeyImtheNewCourse");
+        courseBox2.setVisible(true);
     }
     @FXML
     protected void DeleteClick(ActionEvent event)
@@ -27,9 +34,24 @@ public class CourseController {
     @FXML
     protected void RenameClick(ActionEvent event)
     {
+        RenameButton.setVisible(false);
         renameLabel.setVisible(true);
         newName.setVisible(true);
-        courseBox.setText(newName.getText());
+        renameConfirmB.setVisible(true);
+    }
+    @FXML
+    protected void renameConfirm(ActionEvent event)
+    {
+        renameConfirmB.isDefaultButton();
+        renameConfirmB.setVisible(true);
+        if(!renameConfirmB.isPressed())
+        {
+            courseBox.setText(newName.getText());
+            renameConfirmB.setVisible(false);
+            renameLabel.setVisible(false);
+            newName.setVisible(false);
+        }
+        RenameButton.setVisible(true);
     }
 }
 
