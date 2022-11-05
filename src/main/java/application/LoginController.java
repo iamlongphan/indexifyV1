@@ -19,14 +19,17 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
+import java.io.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ResourceBundle;
 import java.net.URL;
+import java.util.*;
 
 public class LoginController  {
 
+    @FXML
+    private Button reCancel2;
     @FXML
     private Button cancelButton;
     @FXML
@@ -42,21 +45,24 @@ public class LoginController  {
     @FXML
     private PasswordField enterPasswordField;
     @FXML
+    private Button resetPassword;
+    @FXML
     private Button logoutButton;
     @FXML
     public String usernameSaved;
-
-    public void loginButtonAction(ActionEvent event)
-    {
-        if (usernameTextField.getText().isBlank() == false && enterPasswordField.getText().isBlank() == false)
+    @FXML
+    public String passwordSaved;
+    public void loginButtonAction(ActionEvent event) throws FileNotFoundException {
+        if (usernameTextField.getText().isBlank() != false && enterPasswordField.getText().isBlank() != false)
+        {
+            loginMessageLabel.setText("Please enter username and password!");
+        }
+        else
         {
             validateLogin(); // Change to if Statement if/when we change validateLogin to boolean
             Stage stage = (Stage) loginButton.getScene().getWindow();
             loginSuccess(event);
             stage.close();
-        } else {
-            loginMessageLabel.setText("Please enter username and password!");
-
         }
     }
     public void cancelButtonAction(ActionEvent event){
@@ -83,20 +89,33 @@ public class LoginController  {
         }
     }
     //Change to Boolean for Database i think
-    public void validateLogin()
+    public void validateLogin() throws FileNotFoundException
     {
-        System.out.println("Username: " + usernameTextField.getText());
-        System.out.println("Password: " + enterPasswordField.getText());
+        File database = new File("users.TXT");
+        Scanner readDatabase = new Scanner(database);
+        readDatabase.useDelimiter(",");
+
+        while(readDatabase.hasNextLine())
+        {
+            usernameSaved = readDatabase.nextLine();
+            if(usernameTextField.getText().equals(usernameSaved) && enterPasswordField.getText().equals(passwordSaved))
+            {
+                System.out.print("weeeee");
+            }
+        }
     }
     public void resetPassword()
     {
         System.out.println("Reset Password");
+
         Parent root;
         try {
             root = FXMLLoader.load(Main.class.getResource("resetPassword.fxml"));
+            Stage stage2 = (Stage) resetPassword.getScene().getWindow();
+            stage2.close();
             Stage stage = new Stage();
             stage.setTitle("Reset password");
-            stage.setScene(new Scene(root, 530, 400));
+            stage.setScene(new Scene(root, 650, 400));
             stage.setResizable(false);
             stage.show();
         }
@@ -106,8 +125,8 @@ public class LoginController  {
         }
     }
     @FXML
-    protected void signUp()
-    {
+    protected void signUp() throws IOException {
+        FileWriter myWriter = new FileWriter("users.TXT", true);
         Stage stage = new Stage();
         stage.setTitle("Sign Up");
 
@@ -129,6 +148,15 @@ public class LoginController  {
                 String username = usernameField.getText();
                 String password = passwordField.getText();
                 String qAns = question.getText();
+                try {
+                    myWriter.write(username + ", ");
+                    myWriter.write(password + ", ");
+                    myWriter.write(qAns);
+                    myWriter.write("\n");
+                    myWriter.close();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
                 System.out.println(username + " " + password + " " + qAns);
 
                 stage.close();
@@ -176,8 +204,9 @@ public class LoginController  {
         }
     }
     @FXML
-    public void resetCancel() throws IOException
-    {
+    public void resetCancel() throws IOException {
+            Stage stage2 = (Stage) reCancel2.getScene().getWindow();
+            stage2.close();
             Stage stage = new Stage();
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("login.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 530, 400);
@@ -185,6 +214,10 @@ public class LoginController  {
             stage.setResizable(false);
             stage.setScene(scene);
             stage.show();
+    }
+    public void resetConfirm()
+    {
+
     }
 
 }
