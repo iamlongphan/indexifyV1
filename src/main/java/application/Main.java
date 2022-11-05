@@ -1,5 +1,6 @@
 package application;
 
+import indexifyDB.DatabaseInterface;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -23,6 +24,7 @@ public class Main extends Application
 
 
     public static void main(String[] args) {
+        DatabaseInterface db1 = new DatabaseInterface();
         launch();
     }
 }

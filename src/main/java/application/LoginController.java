@@ -1,9 +1,9 @@
 package application;
 
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -18,51 +18,41 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ResourceBundle;
-
 import java.net.URL;
 
-public class LoginController implements Initializable {
+public class LoginController  {
 
     @FXML
     private Button cancelButton;
     @FXML
-    private Button loginButton;
+    public Button loginButton;
     @FXML
     private Label loginMessageLabel;
     @FXML
-    private ImageView brandingImageView;
+    public ImageView brandingImageView;
     @FXML
-    private ImageView lockImageView;
+    public ImageView lockImageView;
     @FXML
     private TextField usernameTextField;
     @FXML
     private PasswordField enterPasswordField;
+    @FXML
+    private Button logoutButton;
+    @FXML
+    public String usernameSaved;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle){
-        File brandingFile = new File("src/main/resources/application/gradientPictogram.jpg");
-        Image brandingImage = new Image(brandingFile.toURI().toString());
-        brandingImageView.setImage(brandingImage);
-
-        File lockFile = new File("src/main/resources/application/padlock.jpg");
-        Image lockImage = new Image(lockFile.toURI().toString());
-        lockImageView.setImage(lockImage);
-
-    }
-
-
-    public void loginButtonAction(ActionEvent event){
-        if(usernameTextField.getText().isBlank() == false && enterPasswordField.getText().isBlank() ==false){
+    public void loginButtonAction(ActionEvent event)
+    {
+        if (usernameTextField.getText().isBlank() == false && enterPasswordField.getText().isBlank() == false)
+        {
             validateLogin(); // Change to if Statement if/when we change validateLogin to boolean
             Stage stage = (Stage) loginButton.getScene().getWindow();
             loginSuccess(event);
             stage.close();
-        }
-        else{
+        } else {
             loginMessageLabel.setText("Please enter username and password!");
 
         }
-
     }
     public void cancelButtonAction(ActionEvent event){
         Stage stage = (Stage) cancelButton.getScene().getWindow();
@@ -88,13 +78,36 @@ public class LoginController implements Initializable {
         }
     }
     //Change to Boolean for Database i think
-    public void validateLogin(){
+    public void validateLogin()
+    {
         System.out.println("Username: " + usernameTextField.getText());
         System.out.println("Password: " + enterPasswordField.getText());
     }
-    public void resetPassword(){
+    public void resetPassword()
+    {
         System.out.println("Reset Password");
+    }
+    protected void signUp()
+    {
 
+    }
+    public void logoutButton()
+    {
+        Parent root;
+        try
+        {
+            root = FXMLLoader.load(Main.class.getResource("login.fxml"));
+            Stage stage = (Stage) logoutButton.getScene().getWindow();
+            stage.setTitle("Indexify");
+            stage.setScene(new Scene(root, 530, 400));
+            stage.setResizable(false);
+            stage.show();
+
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 
 

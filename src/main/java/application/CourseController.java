@@ -1,6 +1,8 @@
 package application;
 
+import indexifyDB.DatabaseInterface;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
 import javafx.geometry.NodeOrientation;
 import javafx.geometry.VPos;
@@ -8,7 +10,11 @@ import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.event.*;
-public class CourseController {
+import javafx.stage.Stage;
+import java.io.IOException;
+
+
+public class CourseController extends LoginController {
     @FXML
     Button addButton;
     @FXML
@@ -33,6 +39,11 @@ public class CourseController {
     Integer indexCol = 0;
     @FXML
     int counter = 0;
+    @FXML
+    Button logoutButton;
+
+
+
 
     /**
      * This class is used in order to grab nodes from the gridPane to make deletion possible, as GridPane doesn't have a delete method
@@ -42,6 +53,7 @@ public class CourseController {
      * @param row The row that is iterated by Integer indexRow
      * @return Returns the node(in this case a button/button bar) of the particular cell of GridPane
      */
+
     public Node getNode(GridPane gridPane1, Integer col, Integer row)
     {
         for (Node node : gridPane1.getChildren())
@@ -82,7 +94,7 @@ public class CourseController {
         {
             counter++;
         }
-        Button courseBox2 = new Button("New Course");
+        Button courseBox2 = new Button("Course " + counter);
         Button RenameButton2 = new Button("Rename");
         Button DeleteButton2 = new Button("Delete");
         TextField newName2 = new TextField("Enter new course name");
@@ -191,26 +203,24 @@ public class CourseController {
         grid1Pane.getChildren().remove(getNode(grid1Pane, grid1Pane.getColumnIndex(node), grid1Pane.getRowIndex(node)));
     }
     @FXML
-    /**
-     * Rename function's main method
-     */
-    protected void RenameClick()
-    {
-        textField1.setVisible(true);
-    }
-    @FXML
-    protected void renameConfirm()
-    {
-        renameConfirmB.isDefaultButton();
-        renameConfirmB.setVisible(true);
-        if(!renameConfirmB.isPressed())
+    public void logoutButton() {
+        Parent root;
+        try
         {
-            courseBox.setText(newName.getText());
-            renameConfirmB.setVisible(false);
-            renameLabel.setVisible(false);
-            newName.setVisible(false);
+            root = FXMLLoader.load(Main.class.getResource("login.fxml"));
+            Stage stage = (Stage) logoutButton.getScene().getWindow();
+            stage.setTitle("Indexify");
+            stage.setScene(new Scene(root,530, 400));
+            stage.setResizable(false);
+            stage.show();
+
         }
-        RenameButton.setVisible(true);
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
     }
+
 }
 
