@@ -49,6 +49,18 @@ public class CourseController {
         }
         return null;
     }
+    public int getNodeCount(GridPane gridPane1)
+    {
+        int count = 0;
+        for(Node node: gridPane1.getChildren())
+        {
+            if(getNode(gridPane1, gridPane1.getColumnIndex(node), gridPane1.getRowIndex(node)) != null)
+            {
+                count++;
+            }
+        }
+        return count;
+    }
     public Node getNodeByRowColumnIndex(Integer row,Integer column,GridPane gridPane) {
         Node result = null;
         ObservableList<Node> childrens = gridPane.getChildren();
@@ -75,6 +87,8 @@ public class CourseController {
         {
             @Override public void handle(ActionEvent e)
             {
+                indexRow = 0;
+                indexCol = 0;
                 DeleteClick(buns);
                 warningLabel.setVisible(false);
             }
@@ -89,7 +103,7 @@ public class CourseController {
             grid1Pane.add(buns, indexRow, indexCol);
             warningLabel.setVisible(false);
         }
-        else if(counter > 6)
+        else if(getNodeCount(grid1Pane) >= 7)
         {
             warningLabel.setVisible(true);
         }
@@ -120,7 +134,7 @@ public class CourseController {
     @FXML
     protected void DeleteClick(Node node)
     {
-        grid1Pane.getChildren().remove(getNodeByRowColumnIndex(grid1Pane.getColumnIndex(node), grid1Pane.getRowIndex(node), grid1Pane));
+        grid1Pane.getChildren().remove(getNodeByRowColumnIndex(grid1Pane.getRowIndex(node), grid1Pane.getColumnIndex(node), grid1Pane));
     }
     @FXML
     protected void RenameClick(ActionEvent event)
