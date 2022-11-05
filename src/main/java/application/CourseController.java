@@ -1,6 +1,5 @@
 package application;
 
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.*;
@@ -30,6 +29,15 @@ public class CourseController {
     Integer indexCol = 0;
     @FXML
     int counter = 0;
+
+    /**
+     * This class is used in order to grab nodes from the gridPane to make deletion possible, as GridPane doesn't have a delete method
+     * inherently.
+     * @param gridPane1 Any GridPane object
+     * @param col The column that is iterated by Integer indexCol
+     * @param row The row that is iterated by Integer indexRow
+     * @return Returns the node(in this case a button/button bar) of the particular cell of GridPane
+     */
     public Node getNode(GridPane gridPane1, Integer col, Integer row)
     {
         for (Node node : gridPane1.getChildren())
@@ -40,6 +48,13 @@ public class CourseController {
         }
         return null;
     }
+
+    /**
+     * This getter is used mainly to figure out the total number of nodes that are filled in the GridPane,
+     * the reason for this is because we have a max limit on the number of courses.
+     * @param gridPane1 Any GridPane object
+     * @return Number of objects in GridPane
+     */
     public int getNodeCount(GridPane gridPane1)
     {
         int count = 0;
@@ -52,21 +67,10 @@ public class CourseController {
         }
         return count;
     }
-    public Node getNodeByRowColumnIndex(Integer row,Integer column,GridPane gridPane) {
-        Node result = null;
-        ObservableList<Node> childrens = gridPane.getChildren();
-        for(Node node : childrens) {
-            if(gridPane.getRowIndex(node) == row && gridPane.getColumnIndex(node) == column) {
-                result = node;
-                break;
-            }
-        }
-        return result;
-    }
     @FXML
     /**
      * Method for the creation of courses, additionaly creates the buttons that provide deleting,
-     * and renaming.
+     * and renaming.  This method also gives functionality to the delete button and rename buttons.
      */
     protected void CreateClick(ActionEvent event)
     {
@@ -97,14 +101,11 @@ public class CourseController {
             buns.getButtons().addAll(courseBox2, RenameButton2, DeleteButton2);
             grid1Pane.add(buns, indexRow, indexCol);
             warningLabel.setVisible(false);
-            System.out.println(indexCol);
-            System.out.println(indexRow);
         }
         else if(getNodeCount(grid1Pane) >= 7)
         {
             warningLabel.setVisible(true);
-            System.out.println(indexCol);
-            System.out.println(indexRow);
+
         }
         else if(getNode(grid1Pane, indexRow, indexCol) != null && counter%2 != 0)
         {
@@ -118,8 +119,7 @@ public class CourseController {
                 indexCol++;
             }
 
-            System.out.println(indexCol);
-            System.out.println(indexRow);
+
             buns.setButtonData(courseBox2, ButtonBar.ButtonData.LEFT);
             buns.setButtonData(RenameButton2, ButtonBar.ButtonData.LEFT);
             buns.setButtonData(DeleteButton2, ButtonBar.ButtonData.LEFT);
@@ -129,8 +129,6 @@ public class CourseController {
         }
         else
         {
-            System.out.println(indexCol);
-            System.out.println(indexRow);
             if(indexRow == 1)
             {
                 indexRow = 0;
@@ -149,11 +147,17 @@ public class CourseController {
     }
 
     @FXML
+    /**
+     * Delete function's main method
+     */
     protected void DeleteClick(Node node)
     {
-        grid1Pane.getChildren().remove(getNodeByRowColumnIndex(grid1Pane.getRowIndex(node), grid1Pane.getColumnIndex(node), grid1Pane));
+        grid1Pane.getChildren().remove(getNode(grid1Pane, grid1Pane.getColumnIndex(node), grid1Pane.getRowIndex(node)));
     }
     @FXML
+    /**
+     * Rename function's main method
+     */
     protected void RenameClick(ActionEvent event)
     {
         RenameButton.setVisible(false);
