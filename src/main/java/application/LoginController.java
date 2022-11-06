@@ -52,6 +52,16 @@ public class LoginController {
     public String usernameSaved;
     @FXML
     public String passwordSaved;
+    @FXML
+    public TextField usernameReset;
+    @FXML
+    public TextField securityAnswer;
+    @FXML
+    public String securityQAns;
+    @FXML
+    public TextField brandNewPass;
+    @FXML
+    public Button resetConfirm;
 
     public void loginButtonAction(ActionEvent event) throws FileNotFoundException {
         if (usernameTextField.getText().isBlank() != false && enterPasswordField.getText().isBlank() != false) {
@@ -92,23 +102,19 @@ public class LoginController {
     public boolean validateLogin() throws FileNotFoundException {
         File database = new File("users.TXT");
         Scanner readDatabase = new Scanner(database);
-        readDatabase.useDelimiter(",");
 
-
-        Scanner readDatabase2 = new Scanner(database);
-        readDatabase2.useDelimiter(", ");
-
-        while(readDatabase.hasNextLine()) {
-            usernameSaved = readDatabase.next();
+        while(readDatabase.hasNext())
+        {
+            usernameSaved = readDatabase.findInLine(usernameTextField.getText());
             System.out.println(usernameSaved);
-            passwordSaved = readDatabase2.findInLine(enterPasswordField.getText());
+            passwordSaved = readDatabase.findInLine(enterPasswordField.getText());
             System.out.println(passwordSaved);
             if (usernameTextField.getText().equals(usernameSaved) && enterPasswordField.getText().equals(passwordSaved))
             {
                 return true;
             }
             else {
-                return false;
+                readDatabase.nextLine();
             }
         }
         return false;
@@ -116,7 +122,7 @@ public class LoginController {
 
     public void resetPassword()
     {
-        System.out.println("Reset Password");
+
 
         Parent root;
         try {
@@ -225,8 +231,24 @@ public class LoginController {
             stage.setScene(scene);
             stage.show();
     }
-    public void resetConfirm()
-    {
+    public void resetConfirm() throws IOException {
+        String newPassword = "";
+        File database = new File("users.TXT");
+        FileWriter myWriter = new FileWriter("users.TXT");
+        Scanner readDatabase = new Scanner(database);
+        while(readDatabase.hasNextLine()) {
+            usernameSaved = readDatabase.findInLine(usernameReset.getText());
+            securityQAns = readDatabase.findInLine(securityAnswer.getText());
+            if (usernameReset.getText().equals(usernameSaved) && securityAnswer.getText().equals(securityQAns))
+            {
+                newPassword = brandNewPass.getText();
+                myWriter.write(usernameSaved +", " + newPassword +", " + securityQAns);
+            }
+            else
+            {
+                readDatabase.nextLine();
+            }
+        }
 
     }
 
