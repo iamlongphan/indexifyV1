@@ -206,6 +206,8 @@ public class CourseController extends LoginController {
         Parent root;
         try
         {
+            usernameSaved = "";
+            passwordSaved = "";
             root = FXMLLoader.load(Main.class.getResource("login.fxml"));
             Stage stage = (Stage) logoutButton.getScene().getWindow();
             stage.setTitle("Indexify");

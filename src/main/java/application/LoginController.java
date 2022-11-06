@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
 import java.net.URL;
 import java.util.*;
 
-public class LoginController  {
+public class LoginController {
 
     @FXML
     private Button reCancel2;
@@ -52,58 +52,68 @@ public class LoginController  {
     public String usernameSaved;
     @FXML
     public String passwordSaved;
+
     public void loginButtonAction(ActionEvent event) throws FileNotFoundException {
-        if (usernameTextField.getText().isBlank() != false && enterPasswordField.getText().isBlank() != false)
-        {
+        if (usernameTextField.getText().isBlank() != false && enterPasswordField.getText().isBlank() != false) {
             loginMessageLabel.setText("Please enter username and password!");
-        }
-        else
-        {
-            validateLogin(); // Change to if Statement if/when we change validateLogin to boolean
-            Stage stage = (Stage) loginButton.getScene().getWindow();
-            loginSuccess(event);
-            stage.close();
+        } else {
+            if (validateLogin()) {
+                Stage stage = (Stage) loginButton.getScene().getWindow();
+                loginSuccess(event);
+                stage.close();
+            } else {
+                loginMessageLabel.setText("Username or Password does not exist.");
+            }
         }
     }
-    public void cancelButtonAction(ActionEvent event){
+
+    public void cancelButtonAction(ActionEvent event) {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
     }
+
     @FXML
-    protected void loginSuccess(ActionEvent event)
-    {
+    protected void loginSuccess(ActionEvent event) {
         Parent root;
-        try
-        {
+        try {
             root = FXMLLoader.load(Main.class.getResource("courseViewer.fxml"));
             Stage stage = new Stage();
             stage.setTitle("Course Viewer");
-            stage.setScene(new Scene(root,1024, 768));
+            stage.setScene(new Scene(root, 1024, 768));
             stage.setResizable(false);
             stage.show();
 
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
     //Change to Boolean for Database i think
-    public void validateLogin() throws FileNotFoundException
-    {
+    public boolean validateLogin() throws FileNotFoundException {
         File database = new File("users.TXT");
         Scanner readDatabase = new Scanner(database);
         readDatabase.useDelimiter(",");
 
-        while(readDatabase.hasNextLine())
-        {
-            usernameSaved = readDatabase.nextLine();
-            if(usernameTextField.getText().equals(usernameSaved) && enterPasswordField.getText().equals(passwordSaved))
+
+        Scanner readDatabase2 = new Scanner(database);
+        readDatabase2.useDelimiter(", ");
+
+        while(readDatabase.hasNextLine()) {
+            usernameSaved = readDatabase.next();
+            System.out.println(usernameSaved);
+            passwordSaved = readDatabase2.findInLine(enterPasswordField.getText());
+            System.out.println(passwordSaved);
+            if (usernameTextField.getText().equals(usernameSaved) && enterPasswordField.getText().equals(passwordSaved))
             {
-                System.out.print("weeeee");
+                return true;
+            }
+            else {
+                return false;
             }
         }
+        return false;
     }
+
     public void resetPassword()
     {
         System.out.println("Reset Password");
@@ -151,7 +161,7 @@ public class LoginController  {
                 try {
                     myWriter.write(username + ", ");
                     myWriter.write(password + ", ");
-                    myWriter.write(qAns);
+                    myWriter.write(qAns + ",");
                     myWriter.write("\n");
                     myWriter.close();
                 } catch (IOException ex) {
