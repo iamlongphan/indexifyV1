@@ -234,33 +234,24 @@ public class LoginController {
             stage.show();
     }
     public void resetConfirm() throws IOException {
-        String newPassword = "";
-        File database = new File("users.TXT");
-        BufferedWriter myWriter = new BufferedWriter(new FileWriter("tempUsers.TXT"));
 
-        Scanner readDatabase = new Scanner(database);
-        while(readDatabase.hasNextLine()) {
-            usernameSaved = readDatabase.findInLine(usernameReset.getText());
-            securityQAns = readDatabase.findInLine(securityAnswer.getText());
-            if (usernameReset.getText().equals(usernameSaved) && securityAnswer.getText().equals(securityQAns))
-            {
-                newPassword = brandNewPass.getText();
-                String reWrite = usernameSaved + ", " + newPassword + ", " + securityQAns;
-                myWriter.write("\n");
-                myWriter.write(reWrite);
-                myWriter.close();
-                UserWRONG.setVisible(false);
-                securityWRONG.setVisible(false);
-                break;
-            }
-            else
-            {
-                readDatabase.nextLine();
-                UserWRONG.setVisible(true);
-                securityWRONG.setVisible(true);
-            }
+        removeLineFromFile();
+        String username = usernameReset.getText();
+        String password = brandNewPass.getText();
+        String qAns = securityAnswer.getText();
+        BufferedWriter myWriter = new BufferedWriter(new FileWriter("users.TXT"));
+        try {
+            myWriter.write(username + ", ");
+            myWriter.write(password + ", ");
+            myWriter.write(qAns + ",");
+            myWriter.write("\n");
+            myWriter.close();
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
         }
-        readDatabase.close();
+        System.out.println(username + " " + password + " " + qAns);
+
+
         Stage stage2 = (Stage) reCancel2.getScene().getWindow();
         stage2.close();
         Stage stage = new Stage();
@@ -272,5 +263,54 @@ public class LoginController {
         stage.show();
 
     }
+    public void removeLineFromFile() {
 
+        try {
+
+            File inFile = new File("users.TXT");
+
+            if (!inFile.isFile()) {
+                System.out.println("Parameter is not an existing file");
+                return;
+            }
+
+            //Construct the new file that will later be renamed to the original filename.
+            File tempFile = new File(inFile.getAbsolutePath() + ".tmp");
+
+            BufferedReader br = new BufferedReader(new FileReader("users.TXT"));
+            PrintWriter pw = new PrintWriter(new FileWriter(tempFile));
+
+            String line = null;
+
+            //Read from the original file and write to the new
+            //unless content matches data to be removed.
+            while ((line = br.readLine()) != null) {
+
+                if (line.trim().indexOf(usernameReset.getText()) == -1) {
+
+                    pw.println(line);
+                    pw.flush();
+                }
+            }
+            pw.close();
+            br.close();
+
+            //Delete the original file
+            if (!inFile.delete()) {
+                System.out.println("Could not delete file");
+                return;
+            }
+
+            //Rename the new file to the filename the original file had.
+            if (!tempFile.renameTo(inFile))
+                System.out.println("Could not rename file");
+
+        }
+        catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 }
