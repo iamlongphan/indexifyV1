@@ -57,8 +57,6 @@ public class LoginController {
     @FXML
     public TextField securityAnswer;
     @FXML
-    public String securityQAns;
-    @FXML
     public TextField brandNewPass;
     @FXML
     public Button reConfirm;
@@ -67,6 +65,11 @@ public class LoginController {
     @FXML
     public Label UserWRONG;
 
+    /**
+     * Action function for the login button.  Allows the button to run the validate functions and login success functions.
+     * @param event
+     * @throws FileNotFoundException
+     */
     public void loginButtonAction(ActionEvent event) throws FileNotFoundException {
         if (usernameTextField.getText().isBlank() != false && enterPasswordField.getText().isBlank() != false) {
             loginMessageLabel.setText("Please enter username and password!");
@@ -82,11 +85,19 @@ public class LoginController {
         }
     }
 
+    /**
+     * Cancels stage/closes windows.
+     * @param event
+     */
     public void cancelButtonAction(ActionEvent event) {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Checks for the success of the login and also brings open the courses if it succeeds.
+     * @param event
+     */
     @FXML
     protected void loginSuccess(ActionEvent event) {
         Parent root;
@@ -103,7 +114,11 @@ public class LoginController {
         }
     }
 
-    //Change to Boolean for Database i think
+    /**
+     * Makes sure that the account exists
+     * @return Boolean: If account exists then true, if not then false.
+     * @throws FileNotFoundException
+     */
     public boolean validateLogin() throws FileNotFoundException {
         File database = new File("users.TXT");
         Scanner readDatabase = new Scanner(database);
@@ -123,6 +138,9 @@ public class LoginController {
         return false;
     }
 
+    /**
+     * Resets the password of an existing account
+     */
     public void resetPassword()
     {
 
@@ -145,7 +163,7 @@ public class LoginController {
     }
 
     /**
-     * Performs the sign-up function
+     * Performs the sign-up function which is currently saving into flat files.
      * @throws IOException
      */
     @FXML
@@ -239,6 +257,11 @@ public class LoginController {
             stage.setScene(scene);
             stage.show();
     }
+
+    /**
+     * Is the main function for the reset password button, writes in the new password into the file and replaces the old one.
+     * @throws IOException
+     */
     public void resetConfirm() throws IOException {
 
         removeLineFromFile();
@@ -269,6 +292,10 @@ public class LoginController {
         stage.show();
 
     }
+
+    /**
+     * Is used in order to delete data from the flat file so that new data can be written in its place
+     */
     public void removeLineFromFile() {
 
         try {
