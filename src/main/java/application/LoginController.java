@@ -61,7 +61,11 @@ public class LoginController {
     @FXML
     public TextField brandNewPass;
     @FXML
-    public Button resetConfirm;
+    public Button reConfirm;
+    @FXML
+    public Label securityWRONG;
+    @FXML
+    public Label UserWRONG;
 
     public void loginButtonAction(ActionEvent event) throws FileNotFoundException {
         if (usernameTextField.getText().isBlank() != false && enterPasswordField.getText().isBlank() != false) {
@@ -106,9 +110,7 @@ public class LoginController {
         while(readDatabase.hasNext())
         {
             usernameSaved = readDatabase.findInLine(usernameTextField.getText());
-            System.out.println(usernameSaved);
             passwordSaved = readDatabase.findInLine(enterPasswordField.getText());
-            System.out.println(passwordSaved);
             if (usernameTextField.getText().equals(usernameSaved) && enterPasswordField.getText().equals(passwordSaved))
             {
                 return true;
@@ -234,7 +236,8 @@ public class LoginController {
     public void resetConfirm() throws IOException {
         String newPassword = "";
         File database = new File("users.TXT");
-        FileWriter myWriter = new FileWriter("users.TXT");
+        BufferedWriter myWriter = new BufferedWriter(new FileWriter("tempUsers.TXT"));
+
         Scanner readDatabase = new Scanner(database);
         while(readDatabase.hasNextLine()) {
             usernameSaved = readDatabase.findInLine(usernameReset.getText());
@@ -242,13 +245,31 @@ public class LoginController {
             if (usernameReset.getText().equals(usernameSaved) && securityAnswer.getText().equals(securityQAns))
             {
                 newPassword = brandNewPass.getText();
-                myWriter.write(usernameSaved +", " + newPassword +", " + securityQAns);
+                String reWrite = usernameSaved + ", " + newPassword + ", " + securityQAns;
+                myWriter.write("\n");
+                myWriter.write(reWrite);
+                myWriter.close();
+                UserWRONG.setVisible(false);
+                securityWRONG.setVisible(false);
+                break;
             }
             else
             {
                 readDatabase.nextLine();
+                UserWRONG.setVisible(true);
+                securityWRONG.setVisible(true);
             }
         }
+        readDatabase.close();
+        Stage stage2 = (Stage) reCancel2.getScene().getWindow();
+        stage2.close();
+        Stage stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("login.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 530, 400);
+        stage.setTitle("Indexify");
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show();
 
     }
 
