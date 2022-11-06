@@ -10,6 +10,10 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.event.*;
 import javafx.stage.Stage;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
 
@@ -87,8 +91,10 @@ public class CourseController extends LoginController {
      * Method for the creation of courses, additionaly creates the buttons that provide deleting,
      * and renaming.  This method also gives functionality to the delete button and rename buttons.
      */
-    protected void CreateClick(ActionEvent event)
-    {
+    protected void CreateClick(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+        File courses = new File("userCourses.TXT");
+        BufferedWriter myWriter = new BufferedWriter(new FileWriter("userCourses.TXT"));
         if(!addButton.isPressed())
         {
             counter++;
@@ -139,6 +145,8 @@ public class CourseController extends LoginController {
             grid1Pane.add(newName2, indexRow, indexCol);
             grid1Pane.setHalignment(newName2, HPos.CENTER);
             grid1Pane.setValignment(newName2, VPos.TOP);
+            myWriter.write(courseBox2.getText());
+            myWriter.write("\n");
             ConfirmButton.setVisible(false);
             newName2.setVisible(false);
             warningLabel.setVisible(false);
@@ -168,6 +176,8 @@ public class CourseController extends LoginController {
             grid1Pane.add(newName2, indexRow, indexCol);
             grid1Pane.setHalignment(newName2, HPos.CENTER);
             grid1Pane.setValignment(newName2, VPos.TOP);
+            myWriter.write(courseBox2.getText());
+            myWriter.write("\n");
             ConfirmButton.setVisible(false);
             newName2.setVisible(false);
             warningLabel.setVisible(false);
@@ -185,6 +195,8 @@ public class CourseController extends LoginController {
             grid1Pane.add(newName2, indexRow, indexCol);
             grid1Pane.setHalignment(newName2, HPos.CENTER);
             grid1Pane.setValignment(newName2, VPos.TOP);
+            myWriter.write(String.valueOf(courseBox2));
+            myWriter.write("\n");
             ConfirmButton.setVisible(false);
             newName2.setVisible(false);
             warningLabel.setVisible(false);

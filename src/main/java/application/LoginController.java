@@ -74,6 +74,7 @@ public class LoginController {
             if (validateLogin()) {
                 Stage stage = (Stage) loginButton.getScene().getWindow();
                 loginSuccess(event);
+                usernameSaved = usernameTextField.getText();
                 stage.close();
             } else {
                 loginMessageLabel.setText("Username or Password does not exist.");
@@ -142,6 +143,11 @@ public class LoginController {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Performs the sign-up function
+     * @throws IOException
+     */
     @FXML
     protected void signUp() throws IOException {
         FileWriter myWriter = new FileWriter("users.TXT", true);
